@@ -38,8 +38,8 @@ public class ProductControllerTest2 {
 
     @BeforeEach
     public void setUp(){
-        products.add(new Product());
-        products.add(new Product());
+        products.add(new Product("product1",20.0));
+        products.add(new Product("product2",50.0));
         given(productService.getAll()).willReturn(products);
     }
 
@@ -48,7 +48,8 @@ public class ProductControllerTest2 {
 //        responseEntity = productController.getAllProducts();
 //        assertThat(responseEntity.getBody().size()).isEqualTo(2);
         mvc.perform(get("/products"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().json("[{\"name\":\"product1\"},{\"name\":\"product2\"}]"));
 
     }
 }

@@ -24,4 +24,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    public Product(String name, Double price){
+        this.name = name;
+        this.price = price;
+    }
 }
