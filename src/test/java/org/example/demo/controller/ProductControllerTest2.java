@@ -1,49 +1,54 @@
 package org.example.demo.controller;
 
+
 import lombok.RequiredArgsConstructor;
-import org.example.demo.config.DemoConfiguration;
 import org.example.demo.entity.Product;
 import org.example.demo.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
-import static org.mockito.Mockito.reset;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.test.web.servlet.MockMvc;
 
-@SpringJUnitConfig(classes = DemoConfiguration.class)
+@SpringBootTest
+@RequiredArgsConstructor
+@AutoConfigureMockMvc
 public class ProductControllerTest2 {
 
-
-    @Autowired(required = true)
-    private ProductController productController;
-
-    @Autowired
+    @SpyBean
     private ProductService productService;
 
+    List<Product> products = new ArrayList<>();
     private ResponseEntity<List<Product>> responseEntity;
+
+    @Autowired
+    private MockMvc mvc;
 
     @BeforeEach
     public void setUp(){
-        given(productService.getAll()).willReturn(  );
+        products.add(new Product());
+        products.add(new Product());
+        given(productService.getAll()).willReturn(products);
     }
 
     @Test
-    public void getAllProducts(){
-        responseEntity = productController.getAllProducts();
-        assertThat(responseEntity.getBody().size()).isEqualTo(4);
+    public void getAllProducts() throws Exception {
+//        responseEntity = productController.getAllProducts();
+//        assertThat(responseEntity.getBody().size()).isEqualTo(2);
+        mvc.perform(get("/products"))
+                .andExpect(status().isOk());
+
     }
 }

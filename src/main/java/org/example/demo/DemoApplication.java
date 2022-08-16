@@ -40,7 +40,7 @@ public class DemoApplication {
 			productRepository.save(product1);
 			productRepository.save(product2);
 			productRepository.save(product3);
-			productRepository.save(product4);
+//			productRepository.save(product4);
 
 			productRepository.findAll().forEach(System.out::println);
 		};
