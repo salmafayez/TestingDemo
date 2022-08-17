@@ -1,4 +1,4 @@
-package org.example.demo.controller;
+package org.example.demo.test;
 
 
 import lombok.RequiredArgsConstructor;

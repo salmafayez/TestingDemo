@@ -1,5 +1,6 @@
-package org.example.demo.controller;
+package org.example.demo.test;
 
+import org.example.demo.controller.ProductController;
 import org.example.demo.entity.Product;
 import org.example.demo.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
